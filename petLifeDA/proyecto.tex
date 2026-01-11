@@ -1,0 +1,63 @@
+\documentclass[10pt]{book}
+
+\usepackage{cdt/cdtUsecases}
+\usepackage{txfonts}
+
+
+\input{config}
+
+\title{\Proyecto\bigskip\\\Componente}
+\subtitle{\Etapa}
+\author{\\
+Cervantes Coss Anibal Alejandro\\
+Cruz Trejo Said Carbot\\
+López Hernández Julián\\
+Mora Hernández Ángel Fernando}
+
+
+\organization{\Cliente}
+\showInstrucciones
+\date{\color{Aquamarine}13 de enero de 2026\\(Entrega Final)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\renewcommand{\listtablename}{Índice de tablas}
+\renewcommand{\tablename}{Tabla} 
+\ThisLRCornerWallPaper{.5}{theme/PetLife}
+%:•
+\maketitle
+\thispagestyle{empty}
+
+\frontmatter
+\tableofcontents
+\listoffigures
+\listoftables
+
+\include{projectCharter}
+
+\mainmatter
+\LRCornerWallPaper{1}{theme/pleca}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%=========================================================
+\include{1introduccion}
+
+%=========================================================
+\include{2ModeloDelAlcance}
+
+%=========================================================
+\include{3ModeloDelNegocio}
+
+%=========================================================
+\include{4ModeloDinamico}
+
+%=========================================================
+\include{5ModeloDeInteraccion}
+
+%=========================================================
+\include{6Referencias}
+
+\end{document}

@@ -1,0 +1,218 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Modelo del alcance}
+\label{cap:alcance}
+
+El presente capítulo establece los límites y objetivos del proyecto tecnológico. Se detalla el análisis de la situación actual del sector veterinario en México, identificando las problemáticas derivadas de la gestión manual de la información y la falta de explotación de datos clínicos. Finalmente, se presenta la propuesta de solución tecnológica, delimitando sus funcionalidades principales, incluyendo el uso de inteligencia artificial para el soporte a la decisión clínica.
+	
+%---------------------------------------------------------
+\section{Análisis del problema}
+
+El análisis se centra en las deficiencias administrativas y clínicas que enfrentan las Pequeñas y Medianas Empresas (PyMEs) dedicadas a la salud animal en México. Diversos estudios señalan que la falta de estandarización en el manejo de expedientes clínicos y la carencia de herramientas digitales especializadas impactan negativamente en la calidad del servicio y la rentabilidad del negocio \cite{garcia2025}. La problemática se desglosa en contexto, problema general, causas, consecuencias y propuesta de solución.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Contexto (descripción detallada del negocio)}
+
+En México, el sector de la medicina veterinaria y zootecnia ha experimentado un cambio de paradigma significativo; las mascotas han pasado a ser consideradas miembros del núcleo familiar. De acuerdo con la Encuesta Nacional de Bienestar Autorreportado (ENBIARE) realizada por el INEGI, México se posiciona como el país con mayor número de mascotas en América Latina, contabilizando cerca de 80 millones de animales de compañía \cite{inegi2021}. Este volumen ha impulsado la proliferación de clínicas y consultorios veterinarios en el territorio nacional.
+
+Sin embargo, una gran parte de estos establecimientos operan bajo esquemas administrativos tradicionales o informales. La Facultad de Medicina Veterinaria y Zootecnia (FMVZ) de la UNAM enfatiza que la administración eficiente y el uso de datos para el pronóstico clínico son tan críticos como la práctica médica \cite{fmvz2021}. En la práctica privada actual, es común la ausencia de sistemas de información integrales que permitan cumplir con la Norma Oficial Mexicana NOM-012-ZOO-1993 \cite{nom012}, limitándose a registros históricos pasivos sin capacidad de proyección sobre la salud futura del paciente.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Problema general}
+
+El problema general que atiende el presente proyecto es: 
+
+
+\begin{quotation}
+	{\em ``La ineficiencia en la gestión de la información clínica y la incapacidad de explotar los datos médicos para generar pronósticos de salud, lo que compromete la continuidad de los tratamientos, la prevención de riesgos y la estimación precisa de la esperanza de vida de los pacientes.''}
+\end{quotation}
+
+Los problemas específicos identificados son\FootnotePrioridad
+
+\begin{problemas}
+   \problema{P-01}{Fragmentación del Expediente Clínico}{Dificultad para acceder a un historial médico unificado del paciente, debido al uso de registros físicos dispersos, impidiendo una visión integral de la salud del animal \cite{fmvz2021}.}{A}
+   \problema{P-02}{Gestión Deficiente de Inventarios}{Falta de control en tiempo real sobre insumos y medicamentos, lo que genera pérdidas económicas y dificultades para cumplir con la trazabilidad exigida por la normativa \cite{nom012}.}{M}
+   \problema{P-03}{Seguimiento Inadecuado de Pacientes}{Ausencia de mecanismos automatizados para recordatorios de vacunación o citas, dependiendo enteramente de la memoria del personal, afectando la medicina preventiva \cite{garcia2025}.}{M}
+   \problema{P-04}{Nula Capacidad Predictiva}{Inexistencia de herramientas que procesen el historial clínico para estimar la esperanza de vida o riesgos futuros, limitando la capacidad del médico para sugerir cuidados geriátricos anticipados.}{M}
+\end{problemas}
+ 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Análisis de causas probables}
+
+\begin{description}
+	\item[P-01] La dependencia de métodos de captura manual y la resistencia al cambio tecnológico en microempresas veterinarias \cite{garcia2025}.
+	\item[P-02] La carencia de un registro digital vinculado al punto de venta o al uso en consulta, provocando discrepancias en el inventario.
+    \item[P-03] La inexistencia de un canal de comunicación directo y automatizado (CRM) entre la clínica y los propietarios.
+    \item[P-04] La falta de algoritmos de Inteligencia Artificial que aprovechen el volumen de datos históricos (raza, peso, patologías previas) para identificar patrones de longevidad y salud.
+\end{description}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Análisis de posibles consecuencias}
+
+\begin{description}
+	\item[P-01] Errores en el diagnóstico o tratamiento debido a información incompleta, conllevando riesgos legales y de salud \cite{fmvz2021}.
+	\item[P-02] Pérdidas financieras significativas por merma de medicamentos caducos e incapacidad para realizar procedimientos de urgencia.
+    \item[P-03] Disminución en la tasa de retención de clientes y afectación al bienestar animal por incumplimiento de profilaxis \cite{inegi2021}.
+    \item[P-04] Incertidumbre en la toma de decisiones para tratamientos de largo plazo y falta de preparación de los propietarios ante el envejecimiento de sus mascotas.
+\end{description}
+ 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Características de la solución}
+
+Para atender la problemática anterior se propone implementar las siguientes acciones mediante el desarrollo de un Sistema de Gestión Veterinaria Integral con capacidades de IA.
+
+\begin{description}
+	\item[P-01] Implementación de un módulo de Expediente Clínico Electrónico (ECE) centralizado y estructurado, accesible de forma segura.
+	\item[P-02] Desarrollo de un módulo de control de inventarios con alertas automáticas de stock mínimo y caducidad, alineado a la normativa \cite{nom012}.
+    \item[P-03] Integración de un sistema de agenda inteligente y notificaciones automáticas para recordar fechas de visitas y tratamientos.
+    \item[P-04] Implementación de un modelo de Inteligencia Artificial entrenado con datos clínicos, capaz de calcular la esperanza de vida estimada del paciente y sugerir planes de bienestar personalizados basados en su historial y raza.
+\end{description}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Síntesis de la problemática}
+
+El análisis evidencia que la falta de herramientas tecnológicas y analíticas en las clínicas veterinarias limita su capacidad operativa y predictiva. La persistencia de procesos manuales no solo genera ineficiencias, sino que desperdicia la oportunidad de utilizar los datos clínicos para mejorar la calidad de vida de los pacientes.
+
+Como solución, se propone una plataforma que digitalice procesos clave e incorpore inteligencia artificial. Esto permitirá no solo estandarizar la información, sino transformar los datos históricos en predicciones útiles sobre la esperanza de vida, alineándose con las tendencias de medicina preventiva digital \cite{garcia2025}.
+
+%---------------------------------------------------------
+\section{Objetivos del proyecto}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Objetivo general}
+
+\begin{quotation}
+	{\em ``Desarrollar un sistema web integral con componentes de inteligencia artificial para la administración clínica y operativa de consultorios veterinarios, optimizando el control del expediente, inventarios y seguimiento, y proporcionando estimaciones sobre la esperanza de vida de los pacientes para apoyar la medicina preventiva.''}
+\end{quotation}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Objetivos específicos}
+
+Los objetivos específicos se han definido siguiendo las fases de desarrollo y la integración de componentes inteligentes:
+
+\begin{itemize}
+	\item Analizar los requerimientos funcionales y la normativa vigente (NOM-012-ZOO-1993) para asegurar el cumplimiento legal y operativo.
+	\item Diseñar la arquitectura de base de datos para integrar información de pacientes, propietarios e inventarios en un repositorio seguro.
+	\item Desarrollar el módulo de Expediente Clínico Electrónico (ECE) para la captura y consulta eficiente del historial médico.
+	\item Implementar un algoritmo de IA que analice variables del expediente (edad, raza, peso, historial de enfermedades) para proyectar la esperanza de vida y apoyar la toma de decisiones clínicas.
+	\item Implementar el módulo de gestión de inventarios con alertas automáticas vinculadas al registro de consultas.
+	\item Validar el sistema mediante pruebas de usabilidad y precisión del modelo predictivo con médicos veterinarios.
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Plan de Trabajo}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Metodología}
+
+Para el desarrollo del proyecto se ha seleccionado una metodología ágil (SCRUM), debido a la naturaleza iterativa necesaria para ajustar tanto los módulos administrativos como el entrenamiento del modelo de IA. El proceso se divide en ``sprints'', permitiendo entregas parciales y la validación continua de las predicciones del sistema en un entorno clínico real.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Calendarización}
+
+La planificación contempla un periodo de desarrollo de 16 semanas, distribuidas en las fases de análisis, diseño, desarrollo (dividido en 3 sprints principales) y pruebas finales. Se considera la asignación de tiempo para la corrección de incidencias y la elaboración de la documentación técnica y de usuario.
+
+A continuación, se presenta el cronograma general de actividades:
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Calendarización}
+
+La planificación del proyecto contempla un periodo de 16 semanas, distribuidas en las fases de análisis, diseño, desarrollo (dividido en 3 sprints principales) y pruebas finales. Se considera la asignación de tiempo para la corrección de incidencias y la elaboración de la documentación técnica y de usuario.
+
+\begin{figure}[p]
+	\centering
+	% angle=90 rota la imagen.
+	% width=0.75\textheight limita el largo de la imagen (verticalmente) al 75% de la hoja
+	% keepaspectratio asegura que no se deforme si es muy ancha
+	\includegraphics[angle=90, width=0.60\textheight, keepaspectratio]{images/gant}
+	\caption{Diagrama de Gantt del proyecto PetLife.}
+	\label{fig:calendarizacion}
+\end{figure}
+
+\subsection{Definición de Roles}
+
+\begin{itemize}
+    \item \textbf{Líder de Proyecto / Scrum Master:} Gestión del cronograma y metodología.
+    \item \textbf{Analista de Negocios:} Traducción de necesidades veterinarias y normativas.
+    \item \textbf{Desarrollador Full Stack:} Programación del *frontend* y *backend*.
+    \item \textbf{Ingeniero de IA/Datos:} Responsable del diseño, entrenamiento y ajuste del modelo predictivo de esperanza de vida.
+    \item \textbf{Administrador de Base de Datos:} Seguridad e integridad de la información.
+    \item \textbf{Tester / QA:} Pruebas de calidad del software y validación de resultados.
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Usuarios identificados}
+
+A continuación, se describen los actores que interactúan con el sistema.
+
+\begin{figure}[htbp!]
+	\begin{center}
+		\includegraphics[width=.8\textwidth]{images/organigramaCircular}
+		\caption{Diagrama de actores del sistema veterinario.}
+		\label{fig:organigrama}
+	\end{center}
+\end{figure}
+
+\begin{description}
+	\item[Administrativo] Responsable de la gestión operativa, altas de registros maestros, agenda global y supervisión de turnos.
+	
+	\item[Veterinario] Profesional de la salud animal. Interactúa con el sistema para gestionar citas, actualizar expedientes y consultar las proyecciones de esperanza de vida generadas por el sistema para orientar al propietario.
+	
+	\item[Usuario] Cliente y propietario del paciente. Utiliza la aplicación para citas, notificaciones y visualización del estatus de salud de su mascota.
+	
+	\item[Sistema de IA] Agente lógico automatizado en el servidor. Ejecuta procesos en tiempo real como la asignación de consultorios, cancelación automática de citas y el procesamiento de datos históricos para calcular la esperanza de vida estimada del paciente.
+\end{description}
+%--------------------------------------------------------
+\begin{figure}[htbp!]
+	\begin{center}
+		\includegraphics[width=.8\textwidth]{images/mapa}
+		\caption{Mapa de procesos de atención clínica y administrativa.}
+		\label{fig:mapaProcASIS}
+	\end{center}
+\end{figure}
+
+%---------------------------------------------------------
+\section{Requerimientos de usuario}
+
+A continuación, se identifican los requerimientos funcionales y no funcionales, incluyendo las capacidades analíticas del sistema.
+
+Los requerimientos del usuario son los siguientes\FootnoteStatus:
+
+\begin{requerimientosU}
+	% Gestión de Usuarios y Roles
+	\FRitem{RU-01}{Registro de pacientes}{El sistema debe permitir registrar pacientes con nombre completo, dirección, teléfono, correo, fecha de nacimiento, sexo, raza y peso.}{1}{\TODO}
+	\FRitem{RU-02}{Registro de doctores}{El sistema debe permitir registrar doctores con cédula, RFC, nombre, dirección y horario.}{1}{\TODO}
+	\FRitem{RU-03}{Registro de especialistas}{El sistema debe permitir registrar doctores especialistas (Ginecología, Dermatología, Pediatría, Ortopedia).}{2}{\TODO}
+	\FRitem{RU-04}{Registro de doctores invitados}{El sistema debe permitir registrar doctores invitados sin consultorio asignado.}{3}{\TODO}
+	
+	% Gestión de Consultorios y Citas
+	\FRitem{RU-05}{Asignación de consultorio}{El sistema debe asignar un consultorio disponible automáticamente o el primero que se desocupe.}{1}{\TODO}
+	\FRitem{RU-06}{Control de ocupación}{El sistema debe marcar un consultorio como ocupado durante 20 minutos promedio.}{2}{\TODO}
+	\FRitem{RU-07}{Gestión de citas}{El sistema debe crear citas vinculando consultorio y paciente.}{1}{\TODO}
+	\FRitem{RU-08}{Cancelación de citas}{El sistema debe permitir cancelar citas por diversos motivos.}{1}{\TODO}
+	\FRitem{RU-09}{Reservación de citas}{El sistema debe permitir reservar citas vía app o teléfono.}{2}{\TODO}
+	\FRitem{RU-10}{Restricción de anticipación}{Las reservaciones no deben exceder un mes de anticipación.}{3}{\TODO}
+	\FRitem{RU-11}{Cancelación automática}{El sistema debe cancelar citas si no hay confirmación 20 minutos antes.}{2}{\TODO}
+	\FRitem{RU-12}{Visualización en monitor}{Monitor en sala de espera con citas próximas y tiempos estimados.}{3}{\TODO}
+	
+	% Gestión Operativa
+	\FRitem{RU-13}{Gestión de turnos médicos}{Rotación de doctores asegurando tres disponibles por turno.}{2}{\TODO}
+	\FRitem{RU-14}{Control de horarios}{Manejo de turnos matutino (8:00–15:00) y vespertino (15:30–21:00).}{2}{\TODO}
+	
+	% Requerimientos No Funcionales y Técnicos
+	\FRitem{RU-15}{Compatibilidad tecnológica}{Desarrollo con software libre: Django (backend) y PostgreSQL (BD).}{1}{\TODO}
+	\FRitem{RU-16}{Rendimiento del sistema}{Manejo de registros y cálculos predictivos en tiempo real sin demoras.}{2}{\TODO}
+	\FRitem{RU-17}{Disponibilidad del sistema}{Disponible durante horario laboral.}{1}{\TODO}
+	\FRitem{RU-18}{Seguridad de datos}{Protección de información personal y médica.}{1}{\TODO}
+	\FRitem{RU-19}{Interfaz de usuario}{Clara y fácil de usar para administrativos y pacientes.}{2}{\TODO}
+	\FRitem{RU-20}{Fecha de entrega}{Implementación antes de 8 meses para pilotaje.}{3}{\TODO}
+	\FRitem{RU-21}{Escalabilidad}{Sistema escalable para nueva sucursal en Guadalajara.}{3}{\TODO}
+	\FRitem{RU-22}{Integridad de la BD}{Almacenamiento consistente y seguro de la información.}{1}{\TODO}
+	
+	% Funcionalidades Adicionales e IA
+	\FRitem{RU-23}{Cancelación manual}{Personal autorizado puede cancelar citas manualmente.}{1}{\TODO}
+	\FRitem{RU-24}{Priorización por urgencia}{Asignación de prioridad a pacientes con urgencia médica.}{1}{\TODO}
+	\FRitem{RU-25}{Notificación de cancelación}{Notificación automática al paciente y médico por cancelación.}{2}{\TODO}
+    \FRitem{RU-26}{Predicción de esperanza de vida}{El sistema debe emplear un modelo de IA para analizar el historial clínico y características del paciente (raza, peso, edad) y generar una estimación de esperanza de vida referencial.}{2}{\TODO}
+\end{requerimientosU}
+%---------------------------------------------------------
