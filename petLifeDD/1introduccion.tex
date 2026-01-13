@@ -1,0 +1,64 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Introducción}
+\label{cap:introduccion}
+
+Este documento presenta el diseño del sistema \textbf{PetLife}. Su contenido se basa en el análisis de requerimientos realizado previamente y funciona como una guía técnica para las etapas de construcción, pruebas y puesta en marcha del sistema.
+
+PetLife es una plataforma para la administración integral de una clínica veterinaria. El diseño propuesto utiliza una arquitectura que combina una aplicación web tradicional con un módulo de Inteligencia Artificial para apoyar el diagnóstico clínico.
+
+En las siguientes secciones se detallan las propiedades del software, las reglas de diseño, la arquitectura del sistema, y los modelos necesarios (estáticos y dinámicos) para entender cómo funciona la solución por dentro.
+
+%---------------------------------------------------------
+\section{Propósito del documento}
+
+El propósito principal de este documento es definir claramente cómo está diseñado el sistema PetLife. Sirve como referencia para que el equipo de desarrollo entienda la estructura del proyecto y cómo deben interactuar sus componentes.
+
+Este documento permite:
+\begin{itemize}
+    \item Entender la arquitectura general y la división entre la web (PHP) y la IA (Python).
+    \item Conocer las directivas y reglas que guían el diseño.
+    \item Ver cómo el diseño resuelve los requisitos de calidad (seguridad, velocidad, etc.).
+    \item Tener una base sólida para escribir el código y configurar la base de datos.
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Alcance del diseño}
+
+El diseño del sistema PetLife cubre los siguientes puntos técnicos:
+\begin{itemize}
+    \item \textbf{Propiedades de Software:} Descripción de los requisitos no funcionales y cómo se solucionan técnicamente.
+    \item \textbf{Directivas de Diseño:} Lista de normas y enlaces a los estándares usados.
+    \item \textbf{Modelo Arquitectónico:} Diagrama de despliegue que muestra los servidores y nodos del sistema.
+    \item \textbf{Modelo Estático:} Diagramas de paquetes y clases que explican la organización del código.
+    \item \textbf{Modelo Dinámico:} Diagramas de secuencia que muestran el paso a paso de las funciones principales.
+    \item \textbf{Modelo de Persistencia:} Lista de los comandos SQL necesarios para manejar los datos.
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Descripción general del sistema}
+
+PetLife es un sistema diseñado para facilitar el trabajo diario en una veterinaria. Permite registrar dueños, gestionar pacientes, agendar citas y guardar el historial médico.
+
+Desde el punto de vista técnico, el sistema funciona con una arquitectura cliente-servidor dividida en dos partes:
+\begin{enumerate}
+    \item \textbf{Módulo Web:} Es la parte principal donde interactúan los usuarios (veterinarios y administradores). Está hecha con PHP y gestiona la base de datos.
+    \item \textbf{Servicio de IA:} Es un componente separado hecho en Python. Se encarga de procesar datos clínicos para hacer predicciones (como la esperanza de vida) sin afectar la velocidad del sitio web.
+\end{enumerate}
+
+Esta división permite que el sistema sea más ordenado y fácil de mantener en el futuro.
+
+%---------------------------------------------------------
+\section{Organización del documento}
+
+El documento sigue el siguiente orden para explicar el sistema paso a paso:
+
+\begin{itemize}
+    \item \textbf{Capítulo 2 (Propiedades de Software):} Explica qué características de calidad debe tener el sistema (como seguridad y rapidez) y cómo se logran.
+    \item \textbf{Capítulo 3 (Directivas de Diseño):} Enumera las reglas y tecnologías que se deben respetar.
+    \item \textbf{Capítulo 4 (Modelo Arquitectónico):} Muestra un mapa general de cómo se conectan los servidores y componentes.
+    \item \textbf{Capítulo 5 (Modelo Estático):} Detalla cómo están organizadas las clases y archivos del código.
+    \item \textbf{Capítulo 6 (Modelo Dinámico):} Usa diagramas para explicar qué pasa internamente cuando un usuario usa el sistema.
+    \item \textbf{Capítulo 7 (Modelo de Persistencia):} Muestra las consultas SQL que el sistema realiza a la base de datos.
+\end{itemize}

@@ -1,0 +1,123 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Modelo de Persistencia}
+\label{cap:modelo_persistencia}
+
+Este capítulo final detalla la capa de datos del sistema **PetLife**. Se describe el esquema de almacenamiento relacional diseñado para garantizar la integridad de la información y se documentan las instrucciones SQL (Structured Query Language) que el sistema ejecuta durante los flujos descritos en el modelo dinámico.
+
+%---------------------------------------------------------
+\section{Descripción del modelo de persistencia}
+
+El sistema implementa un modelo de persistencia relacional utilizando el Sistema Gestor de Base de Datos (SGBD) **MySQL**. La elección de esta tecnología responde a la necesidad de mantener relaciones fuertes entre las entidades (ej. Un Dueño $\to$ Muchas Mascotas) y garantizar las propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad) en las transacciones.
+
+La conexión desde el módulo web (PHP) se realiza mediante la interfaz **PDO (PHP Data Objects)**, lo que permite abstraer el acceso a datos y utilizar sentencias preparadas para mitigar riesgos de seguridad. Cabe destacar que, por eficiencia, los archivos binarios (imágenes de mascotas) no se almacenan en la base de datos; en su lugar, se persiste únicamente la ruta relativa del archivo (\texttt{VARCHAR}), mientras que el recurso físico reside en el sistema de archivos del servidor.
+
+%---------------------------------------------------------
+\section{Diseño de la base de datos}
+
+El esquema de la base de datos se encuentra normalizado hasta la Tercera Forma Normal (3FN) para evitar redundancias. A continuación se presenta el Modelo Entidad-Relación (MER) que estructura las tablas del sistema.
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % INSTRUCCIONES PARA TU DIBUJO (Modelo Entidad-Relación):
+    % Debes insertar aquí una imagen de tu diagrama ER o Modelo Relacional.
+    % Si no tienes uno, dibuja al menos estas dos tablas conectadas:
+    %
+    % Tabla: usuarios
+    % - id (PK, INT, AI)
+    % - nombre (VARCHAR)
+    % - email (VARCHAR, UNIQUE)
+    % - password (VARCHAR) -> ¡Importante! Aquí se guarda el Hash
+    % - rol (ENUM: 'admin', 'veterinario', 'usuario')
+    %
+    % Tabla: mascotas
+    % - id (PK, INT, AI)
+    % - nombre (VARCHAR)
+    % - raza (VARCHAR)
+    % - edad (INT)
+    % - peso (FLOAT)
+    % - foto_path (VARCHAR)
+    % - id_usuario (FK) -> Conecta con usuarios.id
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{8cm} [Insertar aquí el Diagrama Entidad-Relación (DER)]}
+    
+    \caption{Diagrama de la base de datos `usuarios.sql` mostrando las tablas principales y sus relaciones.}
+    \label{fig:der}
+\end{figure}
+
+%---------------------------------------------------------
+\section{Comandos SQL utilizados}
+
+A continuación, se listan las sentencias SQL fundamentales que corresponden a las operaciones identificadas en los Diagramas de Secuencia del Capítulo 6. Se utiliza la notación de parámetros (`?`) para indicar que se trata de sentencias preparadas seguras.
+
+\subsection{Comandos SELECT (Lectura)}
+
+Estas instrucciones se ejecutan cuando el usuario navega por el sistema o cuando el servicio de IA requiere datos para procesar una predicción.
+
+\begin{itemize}
+    \item \textbf{Inicio de Sesión:} Recuperación de credenciales para validar el acceso.
+    \begin{verbatim}
+    SELECT id, password, rol FROM usuarios WHERE email = ? LIMIT 1;
+    \end{verbatim}
+
+    \item \textbf{Listado de Mascotas:} Obtención de todas las mascotas pertenecientes al usuario en sesión (Visualización en \texttt{mis\_mascotas.php}).
+    \begin{verbatim}
+    SELECT id, nombre, raza, foto_path 
+    FROM mascotas 
+    WHERE id_usuario = ?;
+    \end{verbatim}
+
+    \item \textbf{Consulta para IA:} Obtención de datos clínicos específicos para enviar al modelo predictivo Python.
+    \begin{verbatim}
+    SELECT raza, edad, peso, historial_medico 
+    FROM mascotas 
+    WHERE id = ?;
+    \end{verbatim}
+\end{itemize}
+
+\subsection{Comandos INSERT (Creación)}
+
+Sentencias utilizadas en los procesos de registro de nuevos usuarios y alta de pacientes.
+
+\begin{itemize}
+    \item \textbf{Registro de Usuario:} Inserción de un nuevo actor en el sistema.
+    \begin{verbatim}
+    INSERT INTO usuarios (nombre, email, password, rol, fecha_registro) 
+    VALUES (?, ?, ?, 'usuario', NOW());
+    \end{verbatim}
+
+    \item \textbf{Alta de Mascota:} Registro de un nuevo paciente vinculado a su dueño. Nótese el campo para la ruta de la imagen.
+    \begin{verbatim}
+    INSERT INTO mascotas (nombre, raza, edad, peso, foto_path, id_usuario) 
+    VALUES (?, ?, ?, ?, ?, ?);
+    \end{verbatim}
+\end{itemize}
+
+\subsection{Comandos UPDATE (Actualización)}
+
+Operaciones ejecutadas cuando el usuario modifica información existente, como corregir datos de una mascota tras una consulta.
+
+\begin{itemize}
+    \item \textbf{Actualización de Expediente:} Modificación de datos variables como el peso o la edad.
+    \begin{verbatim}
+    UPDATE mascotas 
+    SET edad = ?, peso = ? 
+    WHERE id = ? AND id_usuario = ?;
+    \end{verbatim}
+\end{itemize}
+
+\subsection{Comandos DELETE (Eliminado)}
+
+Instrucciones para la eliminación de registros. Dependiendo de la configuración del sistema, esto puede ser un borrado físico o lógico.
+
+\begin{itemize}
+    \item \textbf{Baja de Mascota:} Eliminación del registro de la base de datos.
+    \begin{verbatim}
+    DELETE FROM mascotas 
+    WHERE id = ? AND id_usuario = ?;
+    \end{verbatim}
+    \textit{Nota: El diseño contempla que, antes de ejecutar este comando SQL, el sistema de archivos debe eliminar la imagen física asociada en la carpeta \texttt{uploads/} para evitar archivos huérfanos.}
+\end{itemize}

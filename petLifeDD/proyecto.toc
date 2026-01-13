@@ -1,0 +1,68 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Propósito del documento}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Alcance del diseño}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Descripción general del sistema}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Organización del documento}{2}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Propiedades de Software}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Descripción de los requerimientos no funcionales}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Seguridad}{3}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Rendimiento}{3}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Disponibilidad}{3}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Escalabilidad}{4}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Usabilidad}{5}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Mantenibilidad}{5}{subsection.2.1.6}%
+\contentsline {chapter}{\numberline {3}Directivas de Diseño}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introducción a las directivas de diseño}{9}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Directivas arquitectónicas}{9}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Separación por capas}{9}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Bajo acoplamiento}{10}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Alta cohesión}{10}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Modularidad}{10}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Directivas de diseño orientado a objetos}{10}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Encapsulamiento}{10}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Abstracción}{10}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Uso de interfaces claras}{10}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Directivas de codificación y estándares}{11}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Estándares de codificación}{11}{subsection.3.4.1}%
+\contentsline {paragraph}{Para el módulo Web (PHP):}{11}{section*.5}%
+\contentsline {paragraph}{Para el módulo de IA (Python):}{11}{section*.6}%
+\contentsline {paragraph}{Para el Frontend (HTML/CSS):}{11}{section*.7}%
+\contentsline {subsection}{\numberline {3.4.2}Referencia a normas y guías externas}{11}{subsection.3.4.2}%
+\contentsline {chapter}{\numberline {4}Modelo Arquitectónico}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Descripción de la arquitectura del sistema}{13}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Estilo arquitectónico}{13}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Diagrama de despliegue}{14}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Explicación del diagrama de despliegue}{14}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Nodo Cliente (Client Tier)}{14}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Nodo Servidor de Aplicaciones (Application Tier)}{14}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Nodo de Datos (Data Tier)}{15}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Requerimientos no funcionales resueltos por la arquitectura}{15}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Modelo Estático}{17}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Descripción general del modelo estático}{17}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Diagrama de paquetes}{17}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Explicación del diagrama de paquetes}{17}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Paquete de Interfaz (Frontend)}{18}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Paquete de Lógica Web (Backend PHP)}{18}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Paquete de Servicios de IA (API Python)}{18}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Paquete de Datos (Persistencia)}{18}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Diagramas de clases}{19}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Explicación de los diagramas de clases}{19}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Clase Usuario}{19}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Clase Mascota}{20}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Clase ServicioPredictivo (Módulo IA)}{20}{subsection.5.5.3}%
+\contentsline {chapter}{\numberline {6}Modelo Dinámico}{21}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Descripción general del modelo dinámico}{21}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Diagramas de secuencia}{21}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Diagrama de secuencia: Registro de Usuario}{21}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Diagrama de secuencia: Predicción de Salud con IA}{22}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Diagramas de secuencia adicionales: Gestión de Mascotas}{22}{subsection.6.2.3}%
+\contentsline {chapter}{\numberline {7}Modelo de Persistencia}{25}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Descripción del modelo de persistencia}{25}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Diseño de la base de datos}{25}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Comandos SQL utilizados}{25}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Comandos SELECT (Lectura)}{26}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Comandos INSERT (Creación)}{27}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}Comandos UPDATE (Actualización)}{27}{subsection.7.3.3}%
+\contentsline {subsection}{\numberline {7.3.4}Comandos DELETE (Eliminado)}{27}{subsection.7.3.4}%
+\contentsline {chapter}{Referencias Bibliográficas}{29}{chapter*.8}%

@@ -1,0 +1,92 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Modelo Arquitectónico}
+\label{cap:arquitectura}
+
+Este capítulo presenta la estructura fundamental del sistema **PetLife**. Se detallan los componentes de software, su distribución en nodos de hardware y la organización lógica que permite satisfacer los requisitos funcionales y de calidad establecidos anteriormente.
+
+%---------------------------------------------------------
+\section{Descripción de la arquitectura del sistema}
+
+La arquitectura del sistema PetLife se ha diseñado como una solución web integral que combina la gestión administrativa tradicional con capacidades de análisis predictivo. El sistema no es un monolito indivisible, sino que opera mediante la orquestación de dos entornos de ejecución distintos que coexisten en el servidor de aplicaciones:
+
+\begin{enumerate}
+    \item \textbf{Entorno Web (PHP):} Responsable de la interfaz de usuario, la lógica de negocio transaccional (citas, registros) y la seguridad de acceso.
+    \item \textbf{Entorno de Inteligencia Artificial (Python):} Responsable de la carga y ejecución del modelo predictivo (\texttt{.joblib}), expuesto como un servicio interno para ser consumido por el entorno web.
+\end{enumerate}
+
+Esta división permite que el sistema aproveche la robustez de PHP para la web y la potencia de las librerías de ciencia de datos de Python, comunicándose entre sí de manera transparente para el usuario final.
+
+%---------------------------------------------------------
+\section{Estilo arquitectónico}
+
+El diseño adopta principalmente el estilo \textbf{Cliente-Servidor} en su interacción con los usuarios, complementado internamente por un enfoque de \textbf{Arquitectura en Capas} y principios de \textbf{Microservicios}.
+
+\begin{itemize}
+    \item \textbf{Patrón Cliente-Servidor:} Los usuarios interactúan a través de un navegador web (Cliente ligero) que realiza peticiones HTTP a un servidor centralizado donde reside la lógica.
+    \item \textbf{Arquitectura en Capas (Layered):} El código se organiza en capas de Presentación (HTML/CSS), Lógica de Negocio (PHP/Python) y Persistencia (MySQL), asegurando la separación de responsabilidades.
+    \item \textbf{Desacoplamiento de Servicios:} El módulo de IA funciona de manera autónoma, similar a un microservicio. Esto significa que la caída del servicio de predicción no detiene la operatividad del resto de la plataforma administrativa.
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Diagrama de despliegue}
+
+El siguiente diagrama UML ilustra la disposición física de los nodos del sistema y los protocolos de comunicación establecidos entre los componentes de software.
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % NOTA PARA TI (SAID):
+    % Aquí debes insertar tu diagrama. 
+    % Dibuja 3 nodos:
+    % 1. Nodo Cliente: (PC/Móvil con Navegador Web).
+    % 2. Nodo Servidor de Aplicaciones: Adentro dibuja dos componentes:
+    %    - Servidor Web (Apache/PHP)
+    %    - API Service (Python/FastAPI)
+    % 3. Nodo Servidor de Datos: (MySQL DBMS)
+    %
+    % Conecta: Cliente -> Servidor Web (HTTPS)
+    % Conecta: Servidor Web -> API Service (HTTP/JSON Local)
+    % Conecta: Servidor Web -> Servidor Datos (TCP/IP)
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{8cm} [Insertar aquí el Diagrama de Despliegue UML]}
+    
+    \caption{Diagrama de despliegue del sistema PetLife, mostrando la integración híbrida entre PHP y Python.}
+    \label{fig:diagrama_despliegue}
+\end{figure}
+
+%---------------------------------------------------------
+\section{Explicación del diagrama de despliegue}
+
+El diagrama presentado en la Figura \ref{fig:diagrama_despliegue} se compone de tres nodos principales, cuyas responsabilidades se describen a continuación:
+
+\subsection{Nodo Cliente (Client Tier)}
+Representa el dispositivo del usuario final (computadora de escritorio o tableta en el consultorio). En este nodo se ejecuta el navegador web que interpreta la interfaz construida con HTML5, CSS3 y la librería jQuery. Su función es capturar los datos y presentarlos, delegando todo el procesamiento pesado al servidor.
+
+\subsection{Nodo Servidor de Aplicaciones (Application Tier)}
+Es el núcleo del sistema y aloja la lógica de negocio. Este nodo presenta una particularidad en su configuración interna, ya que ejecuta dos procesos servidores:
+\begin{itemize}
+    \item \textbf{Servidor Web (PHP):} Recibe las peticiones del cliente (puerto 80/443). Procesa la autenticación, gestiona las sesiones y sirve los archivos estáticos. Actúa como el orquestador principal.
+    \item \textbf{Servicio de IA (Python):} Se ejecuta en un puerto interno (ej. 8000). Mantiene el modelo \texttt{petlife\_model.joblib} cargado en memoria RAM. Recibe datos en formato JSON desde el componente PHP, realiza la inferencia matemática y devuelve el resultado.
+\end{itemize}
+La comunicación entre PHP y Python se realiza mediante peticiones HTTP locales (REST), garantizando la interoperabilidad.
+
+\subsection{Nodo de Datos (Data Tier)}
+Aloja el Sistema Gestor de Base de Datos (SGBD) MySQL. Este nodo es responsable de almacenar de forma persistente la información de usuarios, mascotas, citas y las rutas de los archivos multimedia. Solo el componente PHP tiene permisos para establecer conexiones TCP/IP con este nodo, protegiendo los datos de accesos externos directos.
+
+%---------------------------------------------------------
+\section{Requerimientos no funcionales resueltos por la arquitectura}
+
+La selección de esta arquitectura híbrida y estratificada responde directamente a las necesidades de calidad planteadas en el capítulo de Propiedades de Software:
+
+\begin{description}
+    \item[Resolución de la Escalabilidad:] La separación del motor de IA (Python) del gestor de contenidos (PHP) permite escalar cada componente por separado. Si la demanda de predicciones aumenta, el servicio Python puede migrarse a un servidor con mayor capacidad de cómputo (GPU) sin afectar al servidor web que gestiona las citas.
+    
+    \item[Resolución del Rendimiento:] Al mantener el servicio de IA como un proceso persistente en el servidor, se evita la costosa tarea de cargar el modelo \texttt{.joblib} desde el disco en cada petición. El modelo reside en memoria (Singleton), permitiendo tiempos de respuesta inmediatos para el usuario.
+    
+    \item[Resolución de la Seguridad:] El diseño de despliegue aísla la base de datos del cliente. El navegador nunca tiene acceso directo al nodo de datos; todas las transacciones son mediadas y sanitizadas por la capa de lógica en el servidor de aplicaciones, reduciendo la superficie de ataque.
+    
+    \item[Resolución de la Mantenibilidad:] La arquitectura respeta la estructura de directorios del proyecto. Los equipos de desarrollo pueden trabajar en paralelo: mejoras en la interfaz web (carpeta \texttt{recursosWeb}) no interfieren con la optimización de los algoritmos de predicción (carpeta \texttt{petlife\_api}), gracias al bajo acoplamiento entre módulos.
+\end{description}
