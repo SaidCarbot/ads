@@ -1,0 +1,15 @@
+\babel@toc {spanish}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagrama de despliegue del sistema PetLife, mostrando la integración híbrida entre PHP y Python.}}{14}{figure.4.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagrama de paquetes del sistema, reflejando la estructura de directorios y dependencias.}}{18}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagrama de clases principales del dominio de PetLife.}}{19}{figure.5.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Secuencia de operaciones para el registro de un nuevo usuario en el sistema.}}{22}{figure.6.1}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Flujo de interacción híbrido entre PHP y Python para la predicción de salud.}}{23}{figure.6.2}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Secuencia de alta de mascota con gestión de almacenamiento de imágenes.}}{24}{figure.6.3}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Diagrama de la base de datos `usuarios.sql` mostrando las tablas principales y sus relaciones.}}{26}{figure.7.1}%

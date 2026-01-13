@@ -1,0 +1,129 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Modelo Estático}
+\label{cap:modelo_estatico}
+
+En este capítulo se describe la estructura interna del sistema **PetLife**. A diferencia del modelo arquitectónico, que se enfoca en nodos y servidores, el modelo estático detalla cómo está organizado el código fuente, la agrupación de archivos en paquetes lógicos y las relaciones entre las clases y entidades que conforman la solución.
+
+%---------------------------------------------------------
+\section{Descripción general del modelo estático}
+
+El diseño estático de PetLife refleja la naturaleza híbrida del proyecto. El código se encuentra particionado en dos grandes subsistemas lógicos que coinciden con la estructura de directorios del proyecto:
+
+\begin{enumerate}
+    \item \textbf{Subsistema Web (PHP):} Encargado de la gestión de usuarios, mascotas y la interfaz gráfica. Sigue una estructura modular donde cada script o archivo cumple una función específica (Vista o Controlador).
+    \item \textbf{Subsistema de IA (Python):} Organizado bajo patrones de diseño de microservicios, utilizando routers para los puntos de entrada y clases para la lógica de predicción.
+\end{enumerate}
+
+Esta separación permite que el mantenimiento del código sea ordenado, evitando la mezcla de lenguajes y responsabilidades en un mismo directorio.
+
+%---------------------------------------------------------
+\section{Diagrama de paquetes}
+
+El diagrama de paquetes muestra la organización de alto nivel del código fuente, agrupando los elementos en subsistemas lógicos según su funcionalidad.
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % INSTRUCCIONES PARA TU DIBUJO (Diagrama de Paquetes):
+    % Debes dibujar "Carpetas" (símbolo de paquete UML).
+    % Dibuja un Paquete Grande llamado "PetLife System" y adentro pon estos paquetes hijos:
+    % 1. Paquete "Vista/Interfaz" (Representa tu carpeta 'estilo' y 'recursosVisuales').
+    % 2. Paquete "Lógica Web" (Representa tu carpeta 'recursosWeb' y archivos .php raíz).
+    % 3. Paquete "API Service" (Representa tu carpeta 'petlife_api').
+    % 4. Paquete "Persistencia" (Representa tu BD y archivos de conexión).
+    %
+    % Dibuja flechas punteadas ("import" o "use") entre ellos:
+    % - Vista --> usa --> Lógica Web
+    % - Lógica Web --> usa --> API Service
+    % - Lógica Web --> usa --> Persistencia
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{8cm} [Insertar aquí el Diagrama de Paquetes UML]}
+    
+    \caption{Diagrama de paquetes del sistema, reflejando la estructura de directorios y dependencias.}
+    \label{fig:diagrama_paquetes}
+\end{figure}
+
+%---------------------------------------------------------
+\section{Explicación del diagrama de paquetes}
+
+La organización mostrada en la Figura \ref{fig:diagrama_paquetes} corresponde directamente con la estructura de directorios del proyecto, facilitando la navegación para los desarrolladores:
+
+\subsection{Paquete de Interfaz (Frontend)}
+Agrupa todos los recursos estáticos encargados de la presentación visual. Corresponde a los directorios \texttt{estilo/} (CSS) y \texttt{js/} (jQuery). Este paquete no contiene lógica de negocio, solo reglas de visualización y comportamiento del lado del cliente.
+
+\subsection{Paquete de Lógica Web (Backend PHP)}
+Contiene los scripts principales del sistema alojados en \texttt{recursosWeb/}. Este paquete actúa como el controlador del sistema, recibiendo las peticiones del usuario, validando los datos y coordinando las respuestas. Incluye archivos clave como \texttt{user.php} y \texttt{mis\_mascotas.php}.
+
+\subsection{Paquete de Servicios de IA (API Python)}
+Encapsula toda la lógica de Inteligencia Artificial dentro del directorio \texttt{petlife\_api/}. Este paquete es autónomo y contiene sus propios sub-paquetes:
+\begin{itemize}
+    \item \textbf{Routers:} Define los puntos de entrada (endpoints) de la API.
+    \item \textbf{Models:} Contiene los archivos binarios del modelo predictivo (\texttt{.joblib}).
+\end{itemize}
+
+\subsection{Paquete de Datos (Persistencia)}
+Representa la capa de almacenamiento. Incluye los scripts de configuración de base de datos (\texttt{config.php}, \texttt{database.py}) y la estructura de directorios \texttt{uploads/} donde se almacenan las imágenes de las mascotas.
+
+%---------------------------------------------------------
+\section{Diagramas de clases}
+
+Los diagramas de clases detallan la estructura de las entidades del sistema, sus atributos y métodos, así como las relaciones entre ellas. Dado que el sistema utiliza una base de datos relacional y un servicio de objetos en Python, se representan las clases principales de ambos contextos.
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % INSTRUCCIONES PARA TU DIBUJO (Diagrama de Clases):
+    % Aquí dibuja las "Clases" basadas en tu SQL y tu lógica.
+    %
+    % Clase 1: Usuario
+    % - Atributos: id, nombre, email, password_hash
+    % - Métodos: registrar(), iniciarSesion(), cerrarSesion()
+    %
+    % Clase 2: Mascota
+    % - Atributos: id, nombre, raza, edad, foto_path, id_usuario
+    % - Métodos: crear(), obtenerHistorial(), predecirVida()
+    %
+    % Clase 3: PrediccionIA (Representa tu lógica Python)
+    % - Atributos: modelo_cargado
+    % - Métodos: cargarModelo(), realizarInferencia(datos)
+    %
+    % Relaciones:
+    % - Usuario "1" --- tien "0..*" ---> Mascota (Agregación o Asociación)
+    % - Mascota "1" --- usa ---> PrediccionIA (Dependencia)
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{10cm} [Insertar aquí el Diagrama de Clases UML]}
+    
+    \caption{Diagrama de clases principales del dominio de PetLife.}
+    \label{fig:diagrama_clases}
+\end{figure}
+
+%---------------------------------------------------------
+\section{Explicación de los diagramas de clases}
+
+El modelo de clases representa las entidades fundamentales del negocio y cómo interactúan para cumplir los requisitos funcionales. A continuación se describen las clases más relevantes ilustradas en la Figura \ref{fig:diagrama_clases}:
+
+\subsection{Clase Usuario}
+Representa a los actores que interactúan con el sistema (Dueños o Veterinarios).
+\begin{itemize}
+    \item \textbf{Responsabilidad:} Gestionar la autenticación y los datos personales.
+    \item \textbf{Atributos clave:} Identificador único, credenciales cifradas y datos de contacto.
+    \item \textbf{Relaciones:} Tiene una relación de uno a muchos ($1..*$) con la clase \textbf{Mascota}, indicando que un usuario puede ser propietario de múltiples animales.
+\end{itemize}
+
+\subsection{Clase Mascota}
+Es la entidad central del sistema, sobre la cual giran la mayoría de las operaciones clínicas.
+\begin{itemize}
+    \item \textbf{Responsabilidad:} Almacenar la información biológica del animal (raza, edad, peso) y referencias a sus archivos multimedia (fotos).
+    \item \textbf{Métodos principales:} Incluye lógica para registrar nuevos ingresos y solicitar análisis al módulo de IA.
+\end{itemize}
+
+\subsection{Clase ServicioPredictivo (Módulo IA)}
+Esta clase es una abstracción del componente de Python encargado de la Inteligencia Artificial.
+\begin{itemize}
+    \item \textbf{Responsabilidad:} Cargar el modelo \texttt{petlife\_model.joblib} en memoria y exponer el método de inferencia.
+    \item \textbf{Interacción:} No persiste datos en la base de datos directamente; su función es procesar los atributos de la clase \textbf{Mascota} y retornar un valor calculado (ej. esperanza de vida estimada), que posteriormente es mostrado en la interfaz.
+\end{itemize}

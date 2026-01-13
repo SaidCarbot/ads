@@ -1,0 +1,119 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Modelo Dinámico}
+\label{cap:modelo_dinamico}
+
+En este capítulo se modela el comportamiento del sistema **PetLife** a través del tiempo. Mientras que el modelo estático define la estructura, el modelo dinámico describe cómo interactúan los objetos y componentes del sistema mediante el intercambio de mensajes para ejecutar los casos de uso definidos en el análisis.
+
+%---------------------------------------------------------
+\section{Descripción general del modelo dinámico}
+
+La dinámica del sistema sigue un flujo secuencial característico de las aplicaciones web transaccionales, con la particularidad de la integración asíncrona para el módulo de Inteligencia Artificial.
+
+Las interacciones se clasifican en dos patrones principales:
+\begin{enumerate}
+    \item \textbf{Interacción Síncrona (Gestión Administrativa):} El usuario solicita una operación (ej. registrar mascota), el servidor PHP procesa la lógica, interactúa con la base de datos MySQL y devuelve una respuesta inmediata visualizada en el navegador.
+    \item \textbf{Interacción de Servicio (Predicción IA):} El servidor web actúa como cliente del servicio de IA (Python). Se envía una solicitud de cálculo, el servicio procesa los datos con el modelo \texttt{.joblib} y retorna un resultado JSON que el sistema web interpreta y presenta al usuario.
+\end{enumerate}
+
+%---------------------------------------------------------
+\section{Diagramas de secuencia}
+
+A continuación, se presentan los diagramas de secuencia correspondientes a los procesos críticos del sistema, detallando el ciclo de vida de los objetos y el flujo de control.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Diagrama de secuencia: Registro de Usuario}
+Este diagrama ilustra el proceso mediante el cual un nuevo veterinario o dueño se da de alta en la plataforma, asegurando la validación de datos y el almacenamiento seguro de credenciales.
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % INSTRUCCIONES PARA TU DIBUJO (Diagrama de Secuencia 1):
+    % Actores/Líneas de vida:
+    % 1. Actor: "Usuario"
+    % 2. Interfaz: "Formulario Registro" (vista html)
+    % 3. Controlador: "registrar_usuario.php"
+    % 4. Base de Datos: "MySQL"
+    %
+    % Mensajes (Pasos):
+    % 1. Usuario -> Interfaz: Ingresa datos y da click en Registrar.
+    % 2. Interfaz -> Controlador: POST enviarDatos().
+    % 3. Controlador -> Controlador: validarDatos() (validar vacíos).
+    % 4. Controlador -> Controlador: hashPassword() (encriptar clave).
+    % 5. Controlador -> Base de Datos: INSERT INTO usuarios...
+    % 6. Base de Datos --> Controlador: Confirmación (OK).
+    % 7. Controlador --> Interfaz: Redireccionar al Login.
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{10cm} [Insertar aquí Diagrama de Secuencia: Registro de Usuario]}
+    
+    \caption{Secuencia de operaciones para el registro de un nuevo usuario en el sistema.}
+    \label{fig:seq_registro}
+\end{figure}
+
+Explicación: El flujo inicia cuando el actor envía el formulario. El script \texttt{registrar\_usuario.php} valida la integridad de los campos, aplica el algoritmo de hashing a la contraseña para cumplir con el RNF de Seguridad, e inserta el registro en la base de datos. Finalmente, confirma la operación al usuario.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Diagrama de secuencia: Predicción de Salud con IA}
+Este diagrama representa la funcionalidad más compleja del sistema: la comunicación entre el entorno web y el motor de inteligencia artificial para obtener una predicción clínica.
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % INSTRUCCIONES PARA TU DIBUJO (Diagrama de Secuencia 2):
+    % Actores/Líneas de vida:
+    % 1. Actor: "Veterinario"
+    % 2. Vista: "Detalle Mascota" (PHP/JS)
+    % 3. Controlador Web: "usar_modelo.php"
+    % 4. API IA: "Python Service (FastAPI)"
+    % 5. Modelo: "Joblib Model"
+    %
+    % Mensajes (Pasos):
+    % 1. Veterinario -> Vista: Solicita "Analizar Salud".
+    % 2. Vista -> Controlador Web: AJAX Request (datos mascota).
+    % 3. Controlador Web -> API IA: HTTP POST /predict (JSON).
+    % 4. API IA -> Modelo: predict(features).
+    % 5. Modelo --> API IA: return resultado (float).
+    % 6. API IA --> Controlador Web: JSON Response {esperanza: 12}.
+    % 7. Controlador Web --> Vista: Mostrar resultado en gráfico.
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{10cm} [Insertar aquí Diagrama de Secuencia: Predicción IA]}
+    
+    \caption{Flujo de interacción híbrido entre PHP y Python para la predicción de salud.}
+    \label{fig:seq_ia}
+\end{figure}
+
+Explicación: Se observa el desacoplamiento entre capas. El usuario interactúa con la web, pero el procesamiento matemático ocurre externamente. El archivo \texttt{usar\_modelo.php} actúa como puente, formateando los datos de la mascota y enviándolos a la API de Python. La respuesta se recibe asíncronamente y se actualiza la interfaz sin recargar la página.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Diagramas de secuencia adicionales: Gestión de Mascotas}
+El siguiente diagrama detalla el proceso de alta de una mascota, incluyendo la gestión de archivos multimedia (foto de perfil).
+
+\begin{figure}[h!]
+    \centering
+    %-------------------------------------------------------
+    % INSTRUCCIONES PARA TU DIBUJO (Diagrama de Secuencia 3):
+    % Actores/Líneas de vida:
+    % 1. Actor: "Dueño"
+    % 2. Controlador: "agregar_mascota.php"
+    % 3. Sistema de Archivos: "Carpeta uploads/"
+    % 4. Base de Datos: "Tabla mascotas"
+    %
+    % Mensajes (Pasos):
+    % 1. Dueño -> Controlador: Enviar Formulario + Archivo Foto.
+    % 2. Controlador -> Controlador: validarImagen() (tipo/tamaño).
+    % 3. Controlador -> Sistema de Archivos: move_uploaded_file().
+    % 4. Sistema de Archivos --> Controlador: Retorna ruta del archivo.
+    % 5. Controlador -> Base de Datos: INSERT (datos + ruta_foto).
+    % 6. Controlador --> Dueño: Mensaje "Mascota Agregada".
+    %-------------------------------------------------------
+    
+    \framebox[0.9\textwidth]{\rule{0pt}{10cm} [Insertar aquí Diagrama de Secuencia: Alta de Mascota]}
+    
+    \caption{Secuencia de alta de mascota con gestión de almacenamiento de imágenes.}
+    \label{fig:seq_mascota}
+\end{figure}
+
+Explicación: Este proceso involucra tanto a la base de datos como al sistema de archivos del servidor. Es crucial notar que en la base de datos solo se guarda la referencia (ruta relativa) de la imagen, mientras que el archivo físico se deposita en el directorio \texttt{uploads/}, optimizando así el almacenamiento.

@@ -1,0 +1,80 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Directivas de Diseño}
+\label{cap:directivas}
+
+Este capítulo establece los principios, restricciones y guías que orientan el desarrollo del sistema PetLife. Estas directivas aseguran la coherencia técnica entre los módulos desarrollados por los distintos integrantes del equipo y garantizan que el software cumpla con los atributos de calidad definidos previamente.
+
+%---------------------------------------------------------
+\section{Introducción a las directivas de diseño}
+
+El diseño del sistema PetLife se rige por la simplicidad y la separación de responsabilidades. Dado que el sistema integra tecnologías heterogéneas (PHP y Python), es fundamental establecer reglas claras sobre cómo interactúan estos componentes para evitar un sistema frágil o difícil de mantener. Las siguientes directivas son de cumplimiento obligatorio para la implementación de nuevos módulos.
+
+%---------------------------------------------------------
+\section{Directivas arquitectónicas}
+
+Estas directrices definen la estructura de alto nivel del sistema y la organización de sus componentes físicos y lógicos.
+
+\subsection{Separación por capas}
+El sistema debe mantener una estricta separación entre la lógica de presentación, la lógica de negocio y el acceso a datos.
+\begin{itemize}
+    \item \textbf{Capa de Presentación:} Archivos HTML/PHP que solo deben contener lógica de visualización (bucles de renderizado, condicionales de interfaz). No deben realizar consultas SQL directas.
+    \item \textbf{Capa de Negocio:} Scripts que procesan la información (ej. validaciones, llamadas a la API de Python).
+    \item \textbf{Capa de Persistencia:} La comunicación con la base de datos debe centralizarse en archivos de configuración o clases específicas, evitando credenciales dispersas en el código.
+\end{itemize}
+
+\subsection{Bajo acoplamiento}
+Para minimizar la dependencia entre el sistema web y el módulo de Inteligencia Artificial, la comunicación debe ser exclusivamente a través de servicios HTTP (API REST). El código PHP no debe depender de librerías internas de Python, ni viceversa. Si el servidor de IA se detiene, el sitio web principal debe seguir operando en sus funciones administrativas básicas.
+
+\subsection{Alta cohesión}
+Cada módulo o archivo debe tener una responsabilidad única y bien definida.
+\begin{itemize}
+    \item Los archivos dentro de \texttt{petlife\_api/routers/} deben encargarse únicamente de recibir peticiones y llamar al modelo, no de gestionar usuarios de la web.
+    \item Los estilos visuales deben permanecer en archivos CSS externos y nunca mezclados en el código PHP/HTML (inline styles).
+\end{itemize}
+
+\subsection{Modularidad}
+El sistema se divide en módulos funcionales independientes (Gestión de Usuarios, Gestión de Mascotas, Servicio de IA). Cualquier nueva funcionalidad debe clasificarse dentro de uno de estos módulos o justificar la creación de uno nuevo, manteniendo la estructura de directorios establecida en el diseño.
+
+%---------------------------------------------------------
+\section{Directivas de diseño orientado a objetos}
+
+Aunque parte del sistema utiliza programación estructurada (scripts funcionales), se aplican principios de orientación a objetos para la gestión de conexiones y el manejo de datos complejos.
+
+\subsection{Encapsulamiento}
+El acceso directo a las propiedades de las clases o estructuras de datos críticas (como la conexión a la base de datos) debe estar restringido. Se deben utilizar métodos de acceso (getters/setters) o funciones intermediarias para modificar el estado de los objetos, protegiendo así la integridad de los datos.
+
+\subsection{Abstracción}
+Se deben ocultar los detalles complejos de implementación. Por ejemplo, el módulo web debe "saber" que puede pedir una predicción de vida a la IA, pero no necesita conocer los detalles internos del modelo \textit{Joblib} ni el preprocesamiento matemático que realiza Python.
+
+\subsection{Uso de interfaces claras}
+La comunicación entre el cliente (JavaScript/jQuery) y el servidor (PHP/Python) debe realizarse a través de interfaces definidas (Endpoints) que acepten y retornen datos en formato estándar JSON. Esto permite que el frontend cambie visualmente sin romper la lógica del backend.
+
+%---------------------------------------------------------
+\section{Directivas de codificación y estándares}
+
+Siguiendo las instrucciones del proyecto, no se transcriben los manuales de estilo en este documento. En su lugar, se adoptan los estándares internacionales de la industria para los lenguajes utilizados en PetLife. El código fuente debe adherirse a las siguientes especificaciones:
+
+\subsection{Estándares de codificación}
+
+\paragraph{Para el módulo Web (PHP):}
+Se adopta el estándar **PSR-12: Extended Coding Style Guide**. Este define el uso de sangrías, declaración de clases, visibilidad de métodos y estructuras de control.
+\begin{itemize}
+    \item \textbf{Referencia:} \url{https://www.php-fig.org/psr/psr-12/}
+\end{itemize}
+
+\paragraph{Para el módulo de IA (Python):}
+Se adopta la guía de estilo **PEP 8 -- Style Guide for Python Code**. Regula la indentación, el nombrado de variables (snake\_case) y la longitud de líneas.
+\begin{itemize}
+    \item \textbf{Referencia:} \url{https://peps.python.org/pep-0008/}
+\end{itemize}
+
+\paragraph{Para el Frontend (HTML/CSS):}
+Se siguen las guías de estilo de Google para HTML y CSS, priorizando la semántica de las etiquetas y el orden de los atributos.
+\begin{itemize}
+    \item \textbf{Referencia:} \url{https://google.github.io/styleguide/htmlcssguide.html}
+\end{itemize}
+
+\subsection{Referencia a normas y guías externas}
+Adicionalmente, el diseño de la base de datos se rige por las reglas de normalización estándar (hasta la Tercera Forma Normal - 3FN) y la nomenclatura de tablas en plural y minúsculas, conforme a las buenas prácticas de MySQL.

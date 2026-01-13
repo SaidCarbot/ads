@@ -1,0 +1,211 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+\chapter{Propiedades de Software}
+\label{cap:propiedades}
+
+En el presente capítulo se establecen los Requerimientos No Funcionales (RNF) que rigen el comportamiento y la calidad del sistema \textbf{PetLife}. A partir de la investigación realizada y basándose en el modelo de calidad de la norma \textbf{ISO/IEC 25010} y la metodología \textit{Architecture-Centric Design Method} (ACDM), se han definido las tácticas arquitectónicas necesarias. Dado que el proyecto implementa una arquitectura híbrida (interfaz web en PHP y módulo de Inteligencia Artificial en Python), el diseño contempla estrategias específicas para la integración y estabilidad de ambos entornos.
+
+%---------------------------------------------------------
+\section{Descripción de los requerimientos no funcionales}
+
+A continuación, se detallan las propiedades de software identificadas como críticas para el proyecto, organizadas por atributo de calidad.
+
+%---------------------------------------------------------
+\subsection{Seguridad}
+
+La seguridad del sistema se orienta a la protección de la integridad de los datos clínicos y la privacidad de la información de los usuarios. El diseño incorpora mecanismos de defensa en profundidad tanto en la capa de aplicación web como en la interfaz de programación (API) del modelo predictivo.
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Requerimiento (RNF)} & \textbf{Solución en el Diseño (Táctica)} \\
+\hline
+RNF-SEG-01 & Uso de sentencias preparadas en PHP para prevenir inyecciones SQL. \\
+\hline
+RNF-SEG-02 & Hashing seguro de contraseñas mediante \texttt{password\_hash()}. \\
+\hline
+RNF-SEG-03 & Validación de sesiones activas antes de permitir acceso a módulos protegidos. \\
+\hline
+RNF-SEG-04 & Validación de tipo MIME y renombramiento seguro de archivos de imagen. \\
+\hline
+RNF-SEG-05 & Escapado de caracteres HTML para prevenir ataques XSS. \\
+\hline
+RNF-SEG-06 & Validación de datos de entrada en la API mediante esquemas Pydantic. \\
+\hline
+\end{tabular}
+\caption{Propiedades de Seguridad y tácticas aplicadas}
+\label{tab:rnf_seguridad}
+\end{table}
+
+%---------------------------------------------------------
+\subsection{Rendimiento}
+
+El rendimiento constituye un factor crítico para la experiencia del usuario, especialmente en el procesamiento de imágenes y la ejecución del modelo de Inteligencia Artificial.
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Requerimiento (RNF)} & \textbf{Solución en el Diseño (Táctica)} \\
+\hline
+RNF-PERF-01 & Carga única del modelo de IA en memoria al iniciar el servidor. \\
+\hline
+RNF-PERF-02 & Compresión automática de imágenes a formato WebP. \\
+\hline
+RNF-PERF-03 & Comunicación asíncrona mediante AJAX sin recarga de página. \\
+\hline
+RNF-PERF-04 & Indexación de campos críticos en la base de datos MySQL. \\
+\hline
+RNF-PERF-05 & Minificación y caché de recursos estáticos CSS y JavaScript. \\
+\hline
+\end{tabular}
+\caption{Estrategias de Rendimiento}
+\label{tab:rnf_rendimiento}
+\end{table}
+
+%---------------------------------------------------------
+\subsection{Disponibilidad}
+
+La disponibilidad garantiza la continuidad operativa del sistema ante fallos parciales de servicios o infraestructura.
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Requerimiento (RNF)} & \textbf{Solución en el Diseño (Táctica)} \\
+\hline
+RNF-DISP-01 & Manejo de excepciones ante fallos del servicio de IA. \\
+\hline
+RNF-DISP-02 & Uso de transacciones SQL para preservar integridad de datos. \\
+\hline
+RNF-DISP-03 & Endpoint de verificación de estado del servicio de IA. \\
+\hline
+RNF-DISP-04 & Copias de seguridad periódicas de archivos multimedia. \\
+\hline
+RNF-DISP-05 & Centralización de configuraciones y credenciales. \\
+\hline
+\end{tabular}
+\caption{Estrategias de Disponibilidad}
+\label{tab:rnf_disponibilidad}
+\end{table}
+
+%---------------------------------------------------------
+\subsection{Escalabilidad}
+
+La escalabilidad permite al sistema crecer en funcionalidades y volumen de datos sin afectar su estabilidad.
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Requerimiento (RNF)} & \textbf{Solución en el Diseño (Táctica)} \\
+\hline
+RNF-ESC-01 & Desacoplamiento entre frontend PHP y API de IA en Python. \\
+\hline
+RNF-ESC-02 & Arquitectura modular para nuevos tipos de predicción. \\
+\hline
+RNF-ESC-03 & Organización jerárquica del almacenamiento de imágenes. \\
+\hline
+RNF-ESC-04 & Base de datos relacional normalizada para múltiples usuarios. \\
+\hline
+RNF-ESC-05 & Separación entre lógica de negocio y presentación. \\
+\hline
+\end{tabular}
+\caption{Estrategias de Escalabilidad}
+\label{tab:rnf_escalabilidad}
+\end{table}
+
+%---------------------------------------------------------
+\subsection{Usabilidad}
+
+La usabilidad busca una interacción clara e intuitiva para veterinarios y propietarios de mascotas.
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Requerimiento (RNF)} & \textbf{Solución en el Diseño (Táctica)} \\
+\hline
+RNF-USA-01 & Diseño visual consistente mediante hojas de estilo comunes. \\
+\hline
+RNF-USA-02 & Retroalimentación inmediata mediante validaciones asíncronas. \\
+\hline
+RNF-USA-03 & Diseño responsivo con media queries CSS. \\
+\hline
+RNF-USA-04 & Representación gráfica clara de resultados del modelo de IA. \\
+\hline
+RNF-USA-05 & Navegación persistente entre módulos principales. \\
+\hline
+\end{tabular}
+\caption{Estrategias de Usabilidad}
+\label{tab:rnf_usabilidad}
+\end{table}
+
+%---------------------------------------------------------
+\subsection{Mantenibilidad}
+
+La mantenibilidad permite corregir, adaptar y evolucionar el sistema con bajo costo técnico.
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Requerimiento (RNF)} & \textbf{Solución en el Diseño (Táctica)} \\
+\hline
+RNF-MANT-01 & Uso de tipado y documentación automática en la API. \\
+\hline
+RNF-MANT-02 & Gestión explícita de dependencias en archivos de configuración. \\
+\hline
+RNF-MANT-03 & Centralización de la lógica de acceso a datos. \\
+\hline
+RNF-MANT-04 & Organización semántica de la estructura de directorios. \\
+\hline
+RNF-MANT-05 & Implementación de mecanismos de logging detallado. \\
+\hline
+\end{tabular}
+\caption{Estrategias de Mantenibilidad}
+\label{tab:rnf_mantenibilidad}
+\end{table}
+
+%=========================================================
+% BIBLIOGRAFÍA
+%=========================================================
+\begin{thebibliography}{9}
+
+\bibitem{iso25010}
+International Organization for Standardization. (2011).
+\textit{ISO/IEC 25010: Systems and software quality models}.
+
+\bibitem{acdm}
+Lattanze, A. J. (2009).
+\textit{Architecting Software Intensive Systems}.
+Auerbach Publications.
+
+\bibitem{cleanarch}
+Martin, R. C. (2017).
+\textit{Clean Architecture}.
+Prentice Hall.
+
+\bibitem{fastapi}
+Ramírez, S. (2024).
+\textit{FastAPI Documentation}.
+
+\bibitem{php}
+The PHP Group. (2024).
+\textit{PHP Manual: Security and Database Access}.
+
+\end{thebibliography}

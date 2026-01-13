@@ -1,0 +1,93 @@
+% !TeX root = proyecto.tex
+
+%=========================================================
+%\chapter{Project Charter}
+
+\newcommand{\ESCOMPchSec}[1]{\rowcolor{colorAgua}\multicolumn{4}{|c|}{\bf #1}\\\hline}
+\newcommand{\ESCOMPchItem}[2]{{\bf {#1}} & \multicolumn{3}{p{.66\textwidth}|}{#2}\\\hline}
+\newcommand{\ESCOMPchSubItem}[3]{{\bf {#1}} & {#2} & \multicolumn{2}{p{.44\textwidth}|}{#3}\\\hline}
+\newcommand{\ESCOMPchSubSubItem}[4]{{\bf {#1}} & {#2} & {#3}& {#4}\\\hline}
+
+\cleardoublepage
+{\centering{\Huge Contexto General Resumido}\bigskip\\}
+
+\begin{longtable}{|p{.22\textwidth} |p{.22\textwidth} |p{.22\textwidth} |p{.22\textwidth} |}
+\caption{Resumen del proyecto}
+\label{tbl:projectCharter}\\
+\hline
+
+	\ESCOMPchItem{Proyecto:}{PetLife}
+	\ESCOMPchItem{Responsable:}{PetLife Inc., Said Carbot}
+	\ESCOMPchItem{Autoriza:}{PetLife Inc. Anibal Alejandro}
+	\ESCOMPchItem{Background/Contexto:}{Existe una deficiencia crítica en la gestión administrativa y clínica de las PyMEs veterinarias en México, caracterizada por la fragmentación de datos y procesos manuales. El proyecto busca digitalizar estas clínicas para cumplir con la normativa vigente y aprovechar los datos históricos mediante IA.}
+	\ESCOMPchItem{Beneficios esperados:}{
+        \begin{itemize}
+            \item Centralización del Expediente Clínico Electrónico (ECE).
+            \item Reducción de pérdidas por merma mediante control de inventarios y alertas de caducidad.
+            \item Apoyo a la medicina preventiva mediante predicción de esperanza de vida con IA.
+        \end{itemize}
+    }
+	\ESCOMPchItem{Costo estimado:}{\$ 3,145,921.00 $\pm$ 10\%}
+	\ESCOMPchSubSubItem{Fecha de inicio:}{Septiembre 2025}{\bf Fecha de término:}{Enero 2026}
+	\ESCOMPchItem{Objetivo:}{Desarrollar un sistema web integral con componentes de inteligencia artificial para la administración clínica y operativa de consultorios veterinarios, optimizando el control del expediente, inventarios y seguimiento, proporcionando estimaciones sobre la esperanza de vida.}
+
+	\ESCOMPchSec{Entregables Principales}
+	\ESCOMPchSubItem{}{E1 -- Plataforma Web Integral}{Sistema de gestión clínica y administrativa desarrollado en Django (Backend) y HTML/JS (Frontend).}
+	\ESCOMPchSubItem{}{E2 -- Base de Datos}{Repositorio relacional en PostgreSQL para la integridad de expedientes, usuarios e inventarios.}
+	\ESCOMPchSubItem{}{E3 -- Módulo de IA}{Algoritmo predictivo entrenado para estimar la esperanza de vida basado en historial clínico y raza.}
+
+	\ESCOMPchSec{Alcance del proyecto}
+	\ESCOMPchItem{Incluye:}{
+		\begin{Titemize}
+			\Titem Gestión de roles: Administrativos, Veterinarios (Generales, Especialistas e Invitados) y Dueños.
+			\Titem Expediente Clínico Electrónico (ECE) centralizado.
+			\Titem Gestión de inventarios con alertas de stock mínimo y caducidad.
+			\Titem Agenda inteligente con regla de cancelación automática (20 min de tolerancia).
+			\Titem Visualización de citas en monitor de sala de espera.
+			\Titem Módulo de predicción de esperanza de vida basado en IA.
+            \Titem Notificaciones automáticas de medicina preventiva (vacunas/citas).
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Excluye:}{
+		\begin{Titemize}
+			\Titem Diagnósticos médicos definitivos (la IA es solo de apoyo/referencial).
+			\Titem Integración con hardware de laboratorio (rayos X, análisis de sangre) en esta etapa.
+			\Titem Telemedicina o consultas por videollamada.
+		\end{Titemize}
+	}
+
+	\ESCOMPchItem{Criterio de éxito:}{El sistema debe gestionar el flujo completo de una clínica (cita-consulta-inventario) sin errores críticos y el modelo de IA debe ofrecer estimaciones coherentes con la literatura veterinaria.}
+	\ESCOMPchItem{Metodología:}{SCRUM (Ágil) con sprints de desarrollo incremental y validación continua con usuarios finales.}
+
+	\ESCOMPchSec{Datos de contacto}
+	\ESCOMPchItem{Project Manager:}{Said Carbot, contacto institucional de PetLife.}
+	\ESCOMPchItem{Project owner:}{Anibal Alejandro, contacto institucional de PetLife.}
+	\ESCOMPchItem{Equipo de Desarrollo:}{López Hernández Julián, Mora Hernández Ángel Fernando.}
+
+	\ESCOMPchItem{Riesgos y peligros:}{
+		\begin{Titemize}
+			\Titem Resistencia al cambio tecnológico por parte del personal veterinario.
+			\Titem Inconsistencia en la captura de datos históricos para el entrenamiento de la IA.
+            \Titem Fallas de conectividad en la clínica que impidan el acceso al sistema web.
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Supuestos:}{
+		\begin{Titemize}
+			\Titem La clínica cuenta con infraestructura de internet estable y equipos de cómputo.
+			\Titem Los veterinarios adoptarán el uso del ECE en lugar del papel.
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Restricciones y dependencias:}{
+		\begin{Titemize}
+			\Titem Desarrollo obligatorio con Software Libre (Django/PostgreSQL).
+			\Titem Cumplimiento de la NOM-012-ZOO-1993.
+			\Titem Fecha límite de entrega para fase de pilotaje: 8 meses.
+		\end{Titemize}
+	}
+
+	\ESCOMPchSec{Supervisión}
+	\ESCOMPchSubItem{Juntas (Daily/Sprint):}{Equipo PetLife,}{Scrum Master}
+	\ESCOMPchSubItem{Dudas Técnicas:}{Equipo de desarrollo,}{Líder Técnico}
+	\ESCOMPchSubItem{Avances y Entregas:}{Stakeholders,}{Project Owner}
+
+\end{longtable}
